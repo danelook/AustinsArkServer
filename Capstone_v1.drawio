@@ -1,0 +1,65 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0" version="26.2.14">
+  <diagram name="Page-1" id="IFXmj1nf29KCO2z2vWK3">
+    <mxGraphModel dx="1356" dy="771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="yn2adQLre0F1ju3FVmCe-1" value="&lt;h1 align=&quot;left&quot;&gt;Linux&lt;/h1&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=18;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="770" height="750" as="geometry" />
+        </mxCell>
+        <mxCell id="yn2adQLre0F1ju3FVmCe-2" value="&lt;h2&gt;Kubernetes Cluster&lt;/h2&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=20;" vertex="1" parent="1">
+          <mxGeometry x="115" y="100" width="620" height="600" as="geometry" />
+        </mxCell>
+        <mxCell id="yn2adQLre0F1ju3FVmCe-3" value="&lt;h3&gt;Kubernetes Pod&lt;/h3&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=20;" vertex="1" parent="1">
+          <mxGeometry x="130" y="160" width="590" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="yn2adQLre0F1ju3FVmCe-4" value="&lt;h3&gt;Docker&lt;/h3&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=20;" vertex="1" parent="1">
+          <mxGeometry x="150" y="220" width="560" height="450" as="geometry" />
+        </mxCell>
+        <mxCell id="yn2adQLre0F1ju3FVmCe-5" value="MongoDB Container" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="yn2adQLre0F1ju3FVmCe-6" value="&lt;div&gt;Temperature_Sensor.py Container&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="590" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="yn2adQLre0F1ju3FVmCe-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="yn2adQLre0F1ju3FVmCe-7" target="yn2adQLre0F1ju3FVmCe-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yn2adQLre0F1ju3FVmCe-7" value="Motion_Sensor.py&lt;br&gt;&lt;div&gt;Container&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="590" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="yn2adQLre0F1ju3FVmCe-8" value="Humidity_Sensor.py&lt;br&gt;Container" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="590" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="yn2adQLre0F1ju3FVmCe-9" value="&lt;div&gt;MySQL Container&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="220" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="yn2adQLre0F1ju3FVmCe-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="yn2adQLre0F1ju3FVmCe-10" target="yn2adQLre0F1ju3FVmCe-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yn2adQLre0F1ju3FVmCe-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="yn2adQLre0F1ju3FVmCe-10" target="yn2adQLre0F1ju3FVmCe-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yn2adQLre0F1ju3FVmCe-10" value="Kafka" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="420" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="yn2adQLre0F1ju3FVmCe-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="yn2adQLre0F1ju3FVmCe-6" target="yn2adQLre0F1ju3FVmCe-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="520" />
+              <mxPoint x="380" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yn2adQLre0F1ju3FVmCe-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.808;entryY=0.95;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="yn2adQLre0F1ju3FVmCe-8" target="yn2adQLre0F1ju3FVmCe-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="570" y="520" />
+              <mxPoint x="447" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
