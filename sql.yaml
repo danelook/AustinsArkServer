@@ -1,0 +1,31 @@
+#execute this kubernetes yaml file using 
+  ## kubectl apply -f sql.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.7  # This is a pre-built Docker image pulled from Docker Hub
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "root_password"
+        ports:
+        - containerPort: 3306
+
+
+# to enter the sql database:
+
+    # docker exec -it <container_id> bash       ##you find the continer id using dokcer ps
+    # mysql -u root -p                          ## runs Mysql client as root user and prompting you for a password
+
