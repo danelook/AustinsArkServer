@@ -1,3 +1,18 @@
+# motion_sensor service
+apiVersion: v1
+kind: Service
+metadata:
+  name: motion-service
+spec:
+  selector:
+    app: motion
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: ClusterIP
+---
+# motion_sensor deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:

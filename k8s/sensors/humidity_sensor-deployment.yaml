@@ -1,3 +1,18 @@
+# humidity_sensor Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: humidity-service
+spec:
+  selector:
+    app: humidity
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: ClusterIP
+---
+# humidity_sensor Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
