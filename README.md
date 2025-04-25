@@ -24,3 +24,9 @@ source venv/bin/activate
 ```bash
 pip install kafka-python
 ```
+
+### pip installs Necessary for testing Kafka functionality: 
+```bash
+    pip install kafka-python
+    pip install python-dotenv
+```
