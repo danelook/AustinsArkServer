@@ -3,21 +3,38 @@ import random
 import math
 from datetime import datetime, timezone
 import json
+import os
+from kafka import KafkaProducer
+from dotenv import load_dotenv
+
+# Load variables from .env
+load_dotenv()
+
+# Configurable Kafka settings
+KAFKA_ENABLED = os.getenv("KAFKA_TEMP_ENABLED", "false").lower() == "true"
+KAFKA_TOPIC = os.getenv("KAFKA_TEMP_TOPIC", "sensor.temperature")
+KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 
 # Starting temperature in Fahrenheit
 base_temp_f = 72.0
-
-# Create a random Sensor_ID
 sensor_id = random.randint(1, 1000)
 
+# Kafka producer setup (if enabled)
+producer = None
+if KAFKA_ENABLED:
+    try:
+        producer = KafkaProducer(
+            bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
+            value_serializer=lambda v: json.dumps(v).encode("utf-8")
+        )
+    except Exception as e:
+        print(f"[ERROR] Failed to connect to Kafka: {e}")
+        KAFKA_ENABLED = False
+
 def simulate_temperature(tick):
-    """
-    Simulate a fluctuating temperature in Fahrenheit.
-    """
     daily_drift = 9 * math.sin(2 * math.pi * (tick % 60) / 60)
     random_noise = random.uniform(-1.0, 1.0)
-    temperature = base_temp_f + daily_drift + random_noise
-    return round(temperature, 2)
+    return round(base_temp_f + daily_drift + random_noise, 2)
 
 if __name__ == "__main__":
     tick = 0
@@ -33,11 +50,15 @@ if __name__ == "__main__":
             "units": "F"
         }
 
-        # Serialize to JSON (optional here, but required for Kafka later)
-        sensor_data_json = json.dumps(sensor_data)
-
-        # For now, just print the structured data (this will be replaced by Kafka send)
-        print(sensor_data_json)
+        if KAFKA_ENABLED and producer:
+            try:
+                producer.send(KAFKA_TOPIC, value=sensor_data)
+                producer.flush()
+                print(f"[Kafka] Sent to topic '{KAFKA_TOPIC}': {sensor_data}")
+            except Exception as e:
+                print(f"[ERROR] Failed to send to Kafka: {e}")
+        else:
+            print(f"[Local] {json.dumps(sensor_data)}")
 
         tick += 1
         time.sleep(1)
