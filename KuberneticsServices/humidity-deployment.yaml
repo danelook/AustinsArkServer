@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: humidity-sensor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: humidity
+  template:
+    metadata:
+      labels:
+        app: humidity
+    spec:
+      containers:
+      - name: humidity
+        image: your-dockerhub-username/humidity-sensor:latest
+        imagePullPolicy: Always
