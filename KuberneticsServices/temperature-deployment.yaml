@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temperature-sensor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: temperature
+  template:
+    metadata:
+      labels:
+        app: temperature
+    spec:
+      containers:
+      - name: temperature
+        image: your-dockerhub-username/temperature-sensor:latest
+        imagePullPolicy: Always

@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: motion-sensor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: motion
+  template:
+    metadata:
+      labels:
+        app: motion
+    spec:
+      containers:
+      - name: motion
+        image: your-dockerhub-username/motion-sensor:latest
+        imagePullPolicy: Always
