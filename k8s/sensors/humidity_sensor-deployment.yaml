@@ -29,5 +29,5 @@ spec:
     spec:
       containers:
       - name: humidity
-        image: your-dockerhub-username/humidity-sensor:latest
-        imagePullPolicy: Always
+        image: humidity_sensor:latest 
+        imagePullPolicy: Never
