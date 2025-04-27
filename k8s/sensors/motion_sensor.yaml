@@ -29,5 +29,5 @@ spec:
     spec:
       containers:
       - name: motion
-        image: your-dockerhub-username/motion-sensor:latest
-        imagePullPolicy: Always
+        image: motion_sensor:latest
+        imagePullPolicy: Never

@@ -29,5 +29,5 @@ spec:
     spec:
       containers:
       - name: temperature
-        image: your-dockerhub-username/temperature-sensor:latest
-        imagePullPolicy: Always
+        image: temperature_sensor:latest
+        imagePullPolicy: Never
