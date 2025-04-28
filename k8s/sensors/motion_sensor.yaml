@@ -31,3 +31,10 @@ spec:
       - name: motion
         image: motion_sensor:latest
         imagePullPolicy: Never
+        env:
+        - name: KAFKA_MOTION_ENABLED
+          value: "true"
+        - name: KAFKA_MOTION_TOPIC
+          value: "sensor.motion"
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: "kafka:9092"   # <--- Important: kafka hostname inside k8s cluster
