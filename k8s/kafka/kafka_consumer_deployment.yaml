@@ -1,0 +1,27 @@
+# k8s/kafka/kafka-consumer-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-consumer
+  template:
+    metadata:
+      labels:
+        app: kafka-consumer
+    spec:
+      containers:
+      - name: kafka-consumer
+        image: kafka_consumer:latest
+        imagePullPolicy: Never
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: "kafka:9092"
+        - name: KAFKA_TEMP_TOPIC
+          value: "sensor.temperature"
+        - name: KAFKA_GROUP_ID
+          value: "sensor-group" 
