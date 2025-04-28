@@ -4,11 +4,7 @@ import math
 from datetime import datetime, timezone
 import json
 import os
-from kafka import KafkaProducer
-from dotenv import load_dotenv
-
-# Load variables from .env
-load_dotenv()
+from kafka import KafkaProducer 
 
 # Configurable Kafka settings
 KAFKA_ENABLED = os.getenv("KAFKA_TEMP_ENABLED", "false").lower() == "true"

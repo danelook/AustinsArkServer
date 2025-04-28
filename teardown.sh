@@ -15,9 +15,9 @@ done
 
 # Teardown Kafka-related deployments
 echo "Deleting Kafka stack..."
-kubectl delete -f "k8s/kafka/kafka_stack.yaml" || echo "Kafka stack resources not found, skipping..."
+# kubectl delete -f "k8s/kafka/kafka_stack.yaml" || echo "Kafka stack resources not found, skipping..."
 
 echo "Deleting Kafka consumer deployment..."
-kubectl delete -f "k8s/kafka/kafka_consumer_deployment.yaml" || echo "Kafka consumer resources not found, skipping..."
+# kubectl delete -f "k8s/kafka/kafka_consumer_deployment.yaml" || echo "Kafka consumer resources not found, skipping..."
 
 echo "Cleanup complete!"

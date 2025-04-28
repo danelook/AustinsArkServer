@@ -31,3 +31,10 @@ spec:
       - name: temperature
         image: temperature_sensor:latest
         imagePullPolicy: Never
+        env:
+          - name: KAFKA_TEMP_ENABLED
+            value: "true"
+          - name: KAFKA_TEMP_TOPIC
+            value: "sensor.temperature"
+          - name: KAFKA_BOOTSTRAP_SERVERS
+            value: "kafka.default.svc.cluster.local:9092"
