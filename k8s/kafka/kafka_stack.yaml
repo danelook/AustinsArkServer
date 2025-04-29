@@ -1,0 +1,121 @@
+# Zookeeper Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: zookeeper
+spec:
+  selector:
+    app: zookeeper
+  ports:
+    - protocol: TCP
+      port: 2181
+      targetPort: 2181
+---
+# Zookeeper Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zookeeper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zookeeper
+  template:
+    metadata:
+      labels:
+        app: zookeeper
+    spec:
+      containers:
+      - name: zookeeper
+        image: confluentinc/cp-zookeeper:7.5.0
+        ports:
+          - containerPort: 2181
+        env:
+          - name: ZOOKEEPER_CLIENT_PORT
+            value: "2181"
+          - name: ZOOKEEPER_TICK_TIME
+            value: "2000"
+---
+# Bitnami-kafka service
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka
+spec:
+  ports:
+    - port: 9092
+      targetPort: 9092
+  selector:
+    app: kafka
+---
+# Bitnami-kafka deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+      - name: kafka
+        image: bitnami/kafka:3.4.0-debian-11-r14
+        ports:
+          - containerPort: 9092
+        env:
+          - name: KAFKA_CFG_KRAFT_MODE
+            value: "false"
+          - name: KAFKA_CFG_ZOOKEEPER_CONNECT
+            value: "zookeeper:2181"
+          - name: KAFKA_CFG_ADVERTISED_LISTENERS
+            value: "PLAINTEXT://kafka:9092"
+          - name: KAFKA_CFG_LISTENERS
+            value: "PLAINTEXT://:9092"
+          - name: ALLOW_PLAINTEXT_LISTENER
+            value: "yes"
+---
+# Kafka-UI Service (optional but very helpful)
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-ui
+spec:
+  selector:
+    app: kafka-ui
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+# Kafka-UI Deployment (optional)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-ui
+  template:
+    metadata:
+      labels:
+        app: kafka-ui
+    spec:
+      containers:
+      - name: kafka-ui
+        image: provectuslabs/kafka-ui:latest
+        ports:
+          - containerPort: 8080
+        env:
+          - name: KAFKA_CLUSTERS_0_NAME
+            value: "local"
+          - name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
+            value: "kafka:9092"

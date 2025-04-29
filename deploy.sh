@@ -22,8 +22,8 @@ for SENSOR in "${SENSORS[@]}"; do
     echo "Deploying $SENSOR to Kubernetes..."
     kubectl apply -f "k8s/sensors/${SENSOR}.yaml"
 done
-# kakfa deploymentsf
-# kubectl apply -f "k8s/kafka/kafka_stack.yaml"
-# kubectl apply -f "k8s/kafka/kafka_consumer_deployment.yaml"
+# kakfa deployments
+kubectl apply -f "k8s/kafka/kafka_stack.yaml"
+kubectl apply -f "k8s/kafka/kafka_consumer_deployment.yaml"
 
-echo "All sensors deployed successfully!"
+echo "All sensors deployed successfully!" 

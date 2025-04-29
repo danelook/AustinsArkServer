@@ -42,9 +42,9 @@ done
 
 # Apply Kafka deployments
 echo "Deploying Kafka stack..."
-# kubectl apply -f "k8s/kafka/kafka_stack.yaml"
+kubectl apply -f "k8s/kafka/kafka_stack.yaml"
 
 echo "Deploying Kafka consumer..."
-# kubectl apply -f "k8s/kafka/kafka_consumer_deployment.yaml"
+kubectl apply -f "k8s/kafka/kafka_consumer_deployment.yaml"
 
 echo "Redeployment complete!"

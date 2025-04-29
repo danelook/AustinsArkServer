@@ -29,5 +29,12 @@ spec:
     spec:
       containers:
       - name: humidity
-        image: humidity_sensor:latest 
+        image: humidity_sensor:latest
         imagePullPolicy: Never
+        env:
+        - name: KAFKA_HUMIDITY_ENABLED
+          value: "true"
+        - name: KAFKA_HUMIDITY_TOPIC
+          value: "sensor.humidity"
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: "kafka:9092"
