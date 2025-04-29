@@ -13,6 +13,14 @@ Then run the script.
 ```bash
 kubectl port-forward svc/kafka-ui 8080:8080
 ```
+## Scaling replicas per sensor
+Replace {sensor_type} with whichever sensor you want to scale up or down.
+Replace {number} with number of replicas you want to scale to.
+```bash
+kubectl scale deployment {sensor_type}-sensor --replicas={number}
+```
+
+
 ## Taking the cluster down: 
 Make sure the script is executable on your system first. If it is not executable...
 ```bash
