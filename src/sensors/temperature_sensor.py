@@ -4,27 +4,34 @@ import math
 from datetime import datetime, timezone
 import json
 import os
-from kafka import KafkaProducer 
+from kafka import KafkaProducer
 
-# Configurable Kafka settings
 KAFKA_ENABLED = os.getenv("KAFKA_TEMP_ENABLED", "false").lower() == "true"
 KAFKA_TOPIC = os.getenv("KAFKA_TEMP_TOPIC", "sensor.temperature")
 KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 
-# Starting temperature in Fahrenheit
 base_temp_f = 72.0
 sensor_id = random.randint(1, 1000)
 
-# Kafka producer setup (if enabled)
+MAX_RETRIES = 10
+RETRY_DELAY = 5  # seconds
+
 producer = None
 if KAFKA_ENABLED:
-    try:
-        producer = KafkaProducer(
-            bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
-            value_serializer=lambda v: json.dumps(v).encode("utf-8")
-        )
-    except Exception as e:
-        print(f"[ERROR] Failed to connect to Kafka: {e}")
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            producer = KafkaProducer(
+                bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
+                value_serializer=lambda v: json.dumps(v).encode("utf-8")
+            )
+            print(f"[Producer] Connected to Kafka on attempt {attempt}")
+            break
+        except Exception as e:
+            print(f"[Retry {attempt}] Failed to connect to Kafka: {e}")
+            time.sleep(RETRY_DELAY)
+
+    if not producer:
+        print("[Producer] Could not connect to Kafka. Disabling Kafka output.")
         KAFKA_ENABLED = False
 
 def simulate_temperature(tick):

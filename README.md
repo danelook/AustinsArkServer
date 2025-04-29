@@ -13,3 +13,8 @@ docker build -t humidity_sensor:latest -f Docker/sensors/humidity/Dockerfile .
 ```bash
 kubectl apply -f ./k8s/sensors/humidity_sensor-deployment.yaml 
 ```
+
+## Port-forward command to view kafka-ui in browser
+```bash
+kubectl port-forward svc/kafka-ui 8080:8080
+```

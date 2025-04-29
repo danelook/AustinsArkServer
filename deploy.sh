@@ -26,4 +26,4 @@ done
 kubectl apply -f "k8s/kafka/kafka_stack.yaml"
 kubectl apply -f "k8s/kafka/kafka_consumer_deployment.yaml"
 
-echo "All sensors deployed successfully!" 
+echo "All sensors deployed successfully!"  
