@@ -1,20 +1,15 @@
 # AustinsArkServer
-
-## Building images using Dockerfile(s)
+# How to start up K8s cluster:
+## Run deploy.sh
+Make sure the script is executable on your system first. If it is not executable...
 ```bash
-docker build -t {image-to-build}:latest -f Docker/Dockerfile.humidity_sensor .
+    chmod +x ./deploy.sh
 ```
-For example: humidity_sensor image
+Then run the script.
 ```bash
-docker build -t humidity_sensor:latest -f Docker/sensors/humidity/Dockerfile .
+    ./deploy.sh
 ```
-
-## Spinning up deployments using k8s deployments.yml (humidity_sensor example)
-```bash
-kubectl apply -f ./k8s/sensors/humidity_sensor-deployment.yaml 
-```
-
-## Port-forward command to view kafka-ui in browser
+## Port-forward command to view interactive kafka-ui in browser
 ```bash
 kubectl port-forward svc/kafka-ui 8080:8080
 ```

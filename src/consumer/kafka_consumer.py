@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-KAFKA_TOPIC = os.getenv("KAFKA_TEMP_TOPIC", "sensor.temperature")
+KAFKA_TOPICS = os.getenv("KAFKA_TOPICS", "sensor.temperature").split(",")
 KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 KAFKA_GROUP_ID = os.getenv("KAFKA_GROUP_ID", "sensor-consumer-group")
 
@@ -18,7 +18,7 @@ consumer = None
 for attempt in range(1, MAX_RETRIES + 1):
     try:
         consumer = KafkaConsumer(
-            KAFKA_TOPIC,
+            *KAFKA_TOPICS,  # Unpack topic list
             bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
             group_id=KAFKA_GROUP_ID,
             value_deserializer=lambda m: json.loads(m.decode("utf-8")),
@@ -35,12 +35,13 @@ if not consumer:
     print("[Consumer] Could not connect to Kafka after retries. Exiting.")
     exit(1)
 
-print(f"[Consumer] Listening to topic '{KAFKA_TOPIC}'...")
+print(f"[Consumer] Listening to topics: {KAFKA_TOPICS}")
 
 try:
     for message in consumer:
         sensor_data = message.value
-        print(f"[Received] {sensor_data}")
+        topic = message.topic
+        print(f"[Received] Topic: {topic} | Data: {sensor_data}")
 except KeyboardInterrupt:
     print("\n[Consumer] Shutting down...")
 finally:
