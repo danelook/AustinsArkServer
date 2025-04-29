@@ -10,26 +10,34 @@ KAFKA_ENABLED = os.getenv("KAFKA_MOTION_ENABLED", "false").lower() == "true"
 KAFKA_TOPIC = os.getenv("KAFKA_MOTION_TOPIC", "sensor.motion")
 KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 
+# Retry config
+MAX_RETRIES = 10
+RETRY_DELAY = 5  # seconds
+
 # Unique sensor ID
 sensor_id = random.randint(1, 1000)
 
-# Kafka producer setup (if enabled)
+# Kafka producer setup (with retries)
 producer = None
 if KAFKA_ENABLED:
-    try:
-        producer = KafkaProducer(
-            bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
-            value_serializer=lambda v: json.dumps(v).encode("utf-8")
-        )
-    except Exception as e:
-        print(f"[ERROR] Failed to connect to Kafka: {e}")
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            producer = KafkaProducer(
+                bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
+                value_serializer=lambda v: json.dumps(v).encode("utf-8")
+            )
+            print(f"[Producer] Connected to Kafka on attempt {attempt}")
+            break
+        except Exception as e:
+            print(f"[Retry {attempt}] Failed to connect to Kafka: {e}")
+            time.sleep(RETRY_DELAY)
+
+    if not producer:
+        print("[Producer] Could not connect to Kafka. Disabling Kafka output.")
         KAFKA_ENABLED = False
 
 def simulate_motion():
-    """
-    Randomly decide if motion is detected (10% chance).
-    """
-    return random.random() < 0.1
+    return random.random() < 0.1  # 10% chance of motion
 
 if __name__ == "__main__":
     tick = 0

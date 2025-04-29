@@ -10,34 +10,38 @@ KAFKA_ENABLED = os.getenv("KAFKA_HUMIDITY_ENABLED", "false").lower() == "true"
 KAFKA_TOPIC = os.getenv("KAFKA_HUMIDITY_TOPIC", "sensor.humidity")
 KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 
+# Retry config
+MAX_RETRIES = 10
+RETRY_DELAY = 5  # seconds
+
 # Base humidity percentage (comfortable indoor level)
 base_humidity = 45.0  # percent
-
-# Generate a unique sensor ID for this humidity sensor
 sensor_id = random.randint(1, 1000)
 
 # Kafka producer setup (if enabled)
 producer = None
 if KAFKA_ENABLED:
-    try:
-        producer = KafkaProducer(
-            bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
-            value_serializer=lambda v: json.dumps(v).encode("utf-8")
-        )
-    except Exception as e:
-        print(f"[ERROR] Failed to connect to Kafka: {e}")
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            producer = KafkaProducer(
+                bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
+                value_serializer=lambda v: json.dumps(v).encode("utf-8")
+            )
+            print(f"[Producer] Connected to Kafka on attempt {attempt}")
+            break
+        except Exception as e:
+            print(f"[Retry {attempt}] Failed to connect to Kafka: {e}")
+            time.sleep(RETRY_DELAY)
+
+    if not producer:
+        print("[Producer] Could not connect to Kafka. Disabling Kafka output.")
         KAFKA_ENABLED = False
 
 def simulate_humidity(tick):
-    """
-    Simulate a fluctuating humidity level (%).
-    Uses sine-based drift and random noise.
-    """
     drift = 10 * random.uniform(-1, 1) * (tick % 60) / 60
     noise = random.uniform(-2.0, 2.0)
     humidity = base_humidity + drift + noise
-    humidity = max(0, min(100, humidity))  # Clamp to valid % range
-    return round(humidity, 2)
+    return round(max(0, min(100, humidity)), 2)
 
 if __name__ == "__main__":
     tick = 0
