@@ -1,5 +1,5 @@
 #execute this kubernetes yaml file using 
-  ## kubectl apply -f sql.yaml
+  ## kubectl apply -f k8s/databases/sql.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
