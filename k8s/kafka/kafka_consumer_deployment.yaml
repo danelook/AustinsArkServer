@@ -23,3 +23,14 @@ spec:
           value: "sensor.temperature,sensor.humidity,sensor.motion"
         - name: KAFKA_GROUP_ID
           value: "sensor-group"
+        - name: MYSQL_HOST
+          value: "mysql"
+        - name: MYSQL_PORT
+          value: "3306"
+        - name: MYSQL_USER
+          value: "sensoruser"
+        - name: MYSQL_PASSWORD
+          value: "sensorpass"
+        - name: MYSQL_DATABASE
+          value: "sensordata"
+
