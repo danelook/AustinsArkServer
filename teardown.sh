@@ -20,4 +20,8 @@ kubectl delete -f "k8s/kafka/kafka_stack.yaml" || echo "Kafka stack resources no
 echo "Deleting Kafka consumer deployment..."
 kubectl delete -f "k8s/kafka/kafka_consumer_deployment.yaml" || echo "Kafka consumer resources not found, skipping..."
 
+# Teardown mySQL deployment
+echo "Deleting MySQL..."
+kubectl delete -f "k8s/databases/mysql_deployment.yaml" || echo "MySQL resources not found, skipping..."
+
 echo "Cleanup complete!"
