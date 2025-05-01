@@ -30,3 +30,10 @@ Then run the script.
 ```bash
 ./teardown.sh
 ```
+
+# Notes
+We are able to currently establish a connection between the kafka_consumer and the mysql pod, but we need to manually delete/re-apply the kafka_consumer in order for it to make the connection. This could be because the mysql pod needs time to spin up before it is ready to accept connections and the kafka_consumer tries to connect too early. 
+## Next steps: 
+1. Implement retry logic in kafka_consumer to retry connecting to the mysql pod until a connection is established before consuming topics/messages
+2. Implement establishing infrastructure within kafka_consumer, i.e. databases/tables/primary keys/etc, in mysql db before messages are imported to mysql from kafka_consumer
+3. test/verify importing works as intended with 3 consumers then scale up replicas
