@@ -2,13 +2,47 @@ from kafka import KafkaConsumer
 import json
 import os
 import time 
+import mysql.connector
+from mysql.connector import Error
 
+# Kafka config
 KAFKA_TOPICS = os.getenv("KAFKA_TOPICS", "sensor.temperature").split(",")
 KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 KAFKA_GROUP_ID = os.getenv("KAFKA_GROUP_ID", "sensor-consumer-group")
 
+# MySQL config
+MYSQL_HOST = os.getenv("MYSQL_HOST", "localhost")
+MYSQL_PORT = int(os.getenv("MYSQL_PORT", 3306))
+MYSQL_USER = os.getenv("MYSQL_USER", "sensoruser")
+MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "sensorpass")
+MYSQL_DATABASE = os.getenv("MYSQL_DATABASE", "sensordata")
+
 MAX_RETRIES = 10
-RETRY_DELAY = 5  # seconds
+RETRY_DELAY = 5  # seconds 
+
+def test_mysql_connection():
+    try:
+        conn = mysql.connector.connect(
+            host=MYSQL_HOST,
+            port=MYSQL_PORT,
+            user=MYSQL_USER,
+            password=MYSQL_PASSWORD,
+            database=MYSQL_DATABASE
+        )
+        if conn.is_connected():
+            print("[MySQL] Connection successful.")
+            cursor = conn.cursor()
+            cursor.execute("SELECT 1")
+            result = cursor.fetchone()
+            print(f"[MySQL] Test query result: {result}")
+            cursor.close()
+            conn.close()
+        else:
+            print("[MySQL] Connection failed.")
+    except Error as e:
+        print(f"[MySQL ERROR] {e}")
+
+test_mysql_connection()
 
 consumer = None
 for attempt in range(1, MAX_RETRIES + 1):
