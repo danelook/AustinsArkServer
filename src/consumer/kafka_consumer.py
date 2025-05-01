@@ -1,11 +1,7 @@
 from kafka import KafkaConsumer
 import json
 import os
-import time
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
+import time 
 
 KAFKA_TOPICS = os.getenv("KAFKA_TOPICS", "sensor.temperature").split(",")
 KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
