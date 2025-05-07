@@ -25,9 +25,19 @@ done
 # kakfa broker deployment
 kubectl apply -f "k8s/kafka/kafka_stack.yaml"
 
+# ConfigMap for MySQL initialization
+echo "Creating ConfigMap for MySQL initialization..."
+
+kubectl create configmap mysql-initdb-config \
+  --from-file=init.sql=k8s/databases/init.sql \
+  --dry-run=client -o yaml | kubectl apply -f -
+
+
 # mysql deployment
 echo "Deploying MySQL to Kubernetes..."
 kubectl apply -f "k8s/databases/mysql_deployment.yaml"
+
+kubectl rollout status deployment/mysql
 
 # kafka_consumer deployment 
 kubectl apply -f "k8s/kafka/kafka_consumer_deployment.yaml"
