@@ -20,7 +20,6 @@ Replace {number} with number of replicas you want to scale to.
 kubectl scale deployment {sensor_type}-sensor --replicas={number}
 ```
 
-
 ## Taking the cluster down: 
 Make sure the script is executable on your system first. If it is not executable...
 ```bash
@@ -37,3 +36,8 @@ We are able to currently establish a connection between the kafka_consumer and t
 1. Implement retry logic in kafka_consumer to retry connecting to the mysql pod until a connection is established before consuming topics/messages
 2. Implement establishing infrastructure within kafka_consumer, i.e. databases/tables/primary keys/etc, in mysql db before messages are imported to mysql from kafka_consumer
 3. test/verify importing works as intended with 3 consumers then scale up replicas
+
+# View top logs
+```bash
+kubectl logs <pod-name> | head -n X
+```
