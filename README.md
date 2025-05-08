@@ -31,11 +31,11 @@ Then run the script.
 ```
 
 # Notes
-We are able to currently establish a connection between the kafka_consumer and the mysql pod, but we need to manually delete/re-apply the kafka_consumer in order for it to make the connection. This could be because the mysql pod needs time to spin up before it is ready to accept connections and the kafka_consumer tries to connect too early. 
+We are currently able to run a kubernetes cluster that spawns 3 different sensor types. Each sensor sends/produces messages to a different topic which is then routed through a kafka-broker system and ultimately consumed by a kafka_consumer. The kafka_consumer is able to establish a connection to a spawned mySQL pod with pre-established infrastructure. 
 ## Next steps: 
-1. Implement retry logic in kafka_consumer to retry connecting to the mysql pod until a connection is established before consuming topics/messages
-2. Implement establishing infrastructure within kafka_consumer, i.e. databases/tables/primary keys/etc, in mysql db before messages are imported to mysql from kafka_consumer
-3. test/verify importing works as intended with 3 consumers then scale up replicas
+1. Implement insertion logic of consumed messages into pre-defined database schema within mySQL pod.
+2. Implement prometheus metric exporting inside each sensor, kafka_consumer, and mySQL pod.
+3. Connect Grafana to prometheus metrics and build custom dashboards to allow for monitoring and observability of the system.
 
 # View top logs
 ```bash
