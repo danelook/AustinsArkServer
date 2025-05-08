@@ -1,0 +1,40 @@
+# motion_sensor service
+apiVersion: v1
+kind: Service
+metadata:
+  name: motion-service
+spec:
+  selector:
+    app: motion
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: ClusterIP
+---
+# motion_sensor deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: motion-sensor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: motion
+  template:
+    metadata:
+      labels:
+        app: motion
+    spec:
+      containers:
+      - name: motion
+        image: localhost/motion-sensor
+        imagePullPolicy: Never
+        env:
+        - name: KAFKA_MOTION_ENABLED
+          value: "true"
+        - name: KAFKA_MOTION_TOPIC
+          value: "sensor.motion"
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: "kafka:9092"   # <--- Important: kafka hostname inside k8s cluster

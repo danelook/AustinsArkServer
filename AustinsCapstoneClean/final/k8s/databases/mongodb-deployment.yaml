@@ -1,0 +1,43 @@
+# MongoDB Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - port: 27017
+      targetPort: 27017
+
+# Explanation:
+# This Service acts like a DNS name inside the Kubernetes cluster.
+# It points to all pods with the label 'app: mongodb' in the same namespace.
+# This gives a fixed and reliable name ('mongodb') to connect to, instead of using pod IPs which can change.
+# For example, you can always run: mongo mongodb://mongodb:27017
+# No need to manually look up the pod IP address every time a MongoDB pod restarts or moves.      
+---
+# MongoDB Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongo
+        image: mongo:4.4
+        ports:
+        - containerPort: 27017
+# go into mongodb
+# get the pod name using kubectl get pod -o wide
+# go into the pod kubectl exec -it <insert mongodb pod name here> -- sh
+# go into the mongo db client mongo mognodb://<ip address of mongo pod>:27017

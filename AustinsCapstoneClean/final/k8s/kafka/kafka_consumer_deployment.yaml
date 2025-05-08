@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-consumer
+  template:
+    metadata:
+      labels:
+        app: kafka-consumer
+    spec:
+      containers:
+      - name: kafka-consumer
+        image: kafka-consumer:latest
+        imagePullPolicy: Never
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: "kafka:9092"
+        - name: KAFKA_TOPICS
+          value: "sensor.temperature,sensor.humidity,sensor.motion"
+        - name: KAFKA_GROUP_ID
+          value: "sensor-group"
+        - name: MYSQL_HOST
+          value: "mysql"
+        - name: MYSQL_PORT
+          value: "3306"
+        - name: MYSQL_USER
+          value: "sensoruser"
+        - name: MYSQL_PASSWORD
+          value: "sensorpass"
+        - name: MYSQL_DATABASE
+          value: "sensordata"
+

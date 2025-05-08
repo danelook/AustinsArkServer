@@ -1,0 +1,40 @@
+# humidity_sensor Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: humidity-service
+spec:
+  selector:
+    app: humidity
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: ClusterIP
+---
+# humidity_sensor Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: humidity-sensor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: humidity
+  template:
+    metadata:
+      labels:
+        app: humidity
+    spec:
+      containers:
+      - name: humidity
+        image: localhost/humidity-sensor
+        imagePullPolicy: Never
+        env:
+        - name: KAFKA_HUMIDITY_ENABLED
+          value: "true"
+        - name: KAFKA_HUMIDITY_TOPIC
+          value: "sensor.humidity"
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: "kafka:9092"

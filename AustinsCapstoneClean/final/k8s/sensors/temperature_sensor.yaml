@@ -1,0 +1,40 @@
+# temperature_sensor service
+apiVersion: v1
+kind: Service
+metadata:
+  name: temperature-service
+spec:
+  selector:
+    app: temperature
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: ClusterIP
+---
+# temperature_sensor deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temperature-sensor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: temperature
+  template:
+    metadata:
+      labels:
+        app: temperature
+    spec:
+      containers:
+      - name: temperature
+        image: localhost/temperature-sensor
+        imagePullPolicy: Never
+        env:
+          - name: KAFKA_TEMP_ENABLED
+            value: "true"
+          - name: KAFKA_TEMP_TOPIC
+            value: "sensor.temperature"
+          - name: KAFKA_BOOTSTRAP_SERVERS
+            value: "kafka.default.svc.cluster.local:9092"
