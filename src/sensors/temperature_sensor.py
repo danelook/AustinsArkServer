@@ -64,4 +64,4 @@ if __name__ == "__main__":
             print(f"[Local] {json.dumps(sensor_data)}")
 
         tick += 1
-        time.sleep(1)
+        time.sleep(5)
