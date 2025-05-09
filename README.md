@@ -32,12 +32,11 @@ Then run the script.
 
 # Notes
 We are currently able to run a kubernetes cluster that spawns 3 different sensor types. Each sensor sends/produces messages to a different topic which is then routed through a kafka-broker system and ultimately consumed by a kafka_consumer. The kafka_consumer is able to establish a connection to a spawned mySQL pod with pre-established infrastructure. 
-## Next steps:  
-1. Implement log_producer to send simulated server logs through kafka-broker to be consumed and inserted to mongodb 
-2. Implement prometheus metric exporting inside each sensor, kafka_consumer, and mySQL pod.
-3. Connect Grafana to prometheus metrics and build custom dashboards to allow for monitoring and observability of the system.
-4. Documentation for entire system
-5. Put together presentation slides & establish game-plan for presentation.
+## Next steps:   
+1. Implement prometheus metric exporting inside each sensor, kafka_consumer, and mySQL pod.
+2. Connect Grafana to prometheus metrics and build custom dashboards to allow for monitoring and observability of the system.
+3. Documentation for entire system
+4. Put together presentation slides & establish game-plan for presentation.
 
 # View top logs
 ```bash
