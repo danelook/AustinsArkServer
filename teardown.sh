@@ -28,4 +28,8 @@ kubectl delete -f "k8s/kafka/kafka_consumer_deployment.yaml" || echo "Kafka cons
 echo "Deleting MySQL..."
 kubectl delete -f "k8s/databases/mysql_deployment.yaml" || echo "MySQL resources not found, skipping..."
 
+# Teardown of mongodb deployment
+echo "Deleting MongoDB..."
+kubectl delete -f "k8s/databases/mongodb-deployment.yaml" || echo "MongoDB resources not found, skipping..."
+
 echo "Cleanup complete!"

@@ -4,6 +4,7 @@ import os
 import time
 import mysql.connector
 from mysql.connector import Error
+from pymongo import MongoClient
 
 # Kafka config
 KAFKA_TOPICS = os.getenv("KAFKA_TOPICS", "sensor.temperature").split(",")
@@ -17,9 +18,14 @@ MYSQL_USER = os.getenv("MYSQL_USER", "sensoruser")
 MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "sensorpass")
 MYSQL_DATABASE = os.getenv("MYSQL_DATABASE", "sensordata")
 
+# MongoDB config
+MONGO_HOST = os.getenv("MONGO_HOST", "localhost")
+MONGO_PORT = int(os.getenv("MONGO_PORT", 27017))
+MONGO_DB = os.getenv("MONGO_DB", "logdata")
+MONGO_COLLECTION = os.getenv("MONGO_COLLECTION", "server_logs")
+
 MAX_RETRIES = 10
 RETRY_DELAY = 5  # seconds
-
 
 def connect_mysql_with_retry():
     for attempt in range(1, MAX_RETRIES + 1):
@@ -38,13 +44,26 @@ def connect_mysql_with_retry():
                 result = cursor.fetchone()
                 print(f"[MySQL] Test query result: {result}")
                 cursor.close()
-                return conn  # Keep connection open
+                return conn
         except Error as e:
             print(f"[Retry {attempt}] MySQL connection failed: {e}")
         time.sleep(RETRY_DELAY)
     print("[MySQL] Could not connect after retries. Exiting.")
     exit(1)
 
+def connect_mongo_with_retry():
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            client = MongoClient(host=MONGO_HOST, port=MONGO_PORT)
+            db = client[MONGO_DB]
+            collection = db[MONGO_COLLECTION]
+            print(f"[MongoDB] Connected successfully on attempt {attempt}")
+            return collection
+        except Exception as e:
+            print(f"[Retry {attempt}] MongoDB connection failed: {e}")
+        time.sleep(RETRY_DELAY)
+    print("[MongoDB] Could not connect after retries. Exiting.")
+    exit(1)
 
 def connect_kafka_with_retry():
     for attempt in range(1, MAX_RETRIES + 1):
@@ -65,9 +84,9 @@ def connect_kafka_with_retry():
     print("[Kafka] Could not connect after retries. Exiting.")
     exit(1)
 
-
-# Attempt both connections
+# Establish connections
 mysql_conn = connect_mysql_with_retry()
+mongo_collection = connect_mongo_with_retry()
 consumer = connect_kafka_with_retry()
 
 print(f"[Consumer] Listening to topics: {KAFKA_TOPICS}")
@@ -77,7 +96,16 @@ try:
         sensor_data = message.value
         topic = message.topic
         print(f"[Received] Topic: {topic} | Data: {sensor_data}")
-        # Ready for DB insert logic here (optional)
+
+        if topic == "server.logs":
+            try:
+                mongo_collection.insert_one(sensor_data)
+                print("[MongoDB] Inserted log into MongoDB")
+            except Exception as e:
+                print(f"[MongoDB ERROR] Failed to insert log: {e}")
+            continue
+
+        # Insert sensor data into MySQL
         cursor = mysql_conn.cursor()
 
         sensor_type = sensor_data.get("sensor_type")
@@ -112,8 +140,6 @@ try:
             print(f"[MySQL ERROR] Failed to insert {sensor_type} reading: {e}")
         finally:
             cursor.close()
-
-
 
 except KeyboardInterrupt:
     print("\n[Consumer] Shutting down...")

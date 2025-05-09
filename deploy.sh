@@ -47,8 +47,11 @@ kubectl create configmap mysql-initdb-config \
 
 # mysql deployment 
 kubectl apply -f "k8s/databases/mysql_deployment.yaml"
-
 kubectl rollout status deployment/mysql
+
+# mongodb deployment
+kubectl apply -f "k8s/databases/mongodb-deployment.yaml"
+kubectl rollout status deployment/mongodb
 
 # kafka_consumer deployment 
 kubectl apply -f "k8s/kafka/kafka_consumer_deployment.yaml"
