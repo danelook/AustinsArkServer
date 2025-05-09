@@ -1,0 +1,112 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0" version="27.0.2">
+  <diagram name="Page-1" id="ZSrhWRTSfrOasErDlmwj">
+    <mxGraphModel dx="1494" dy="729" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-1" value="&lt;h1 align=&quot;left&quot;&gt;Linux&lt;/h1&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=18;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="770" height="750" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-2" value="&lt;h2&gt;Kubernetes Cluster&lt;/h2&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=20;" vertex="1" parent="1">
+          <mxGeometry x="115" y="100" width="620" height="600" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-4" value="MongoDB" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="424.5" y="180" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="TaIpVy16Xg6mBHyJVjww-6" target="TaIpVy16Xg6mBHyJVjww-13">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="225" y="540" />
+              <mxPoint x="402" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-29" value="sensor.temperature" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="TaIpVy16Xg6mBHyJVjww-5">
+          <mxGeometry x="-0.7631" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-6" value="&lt;div&gt;Temperature_Sensor &lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="590" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-7" value="Motion_Sensor" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="297" y="590" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="TaIpVy16Xg6mBHyJVjww-9" target="TaIpVy16Xg6mBHyJVjww-13">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="540" />
+              <mxPoint x="402" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-31" value="sensor.humidity" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="TaIpVy16Xg6mBHyJVjww-8">
+          <mxGeometry x="-0.6426" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-9" value="Humidity_Sensor" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="590" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-10" value="&lt;div&gt;MySQL&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="259.5" y="180" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-11" value="Kafka" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="317" y="360" width="173" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="TaIpVy16Xg6mBHyJVjww-13" target="TaIpVy16Xg6mBHyJVjww-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-13" value="Kafka Broker System" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="355.5" y="440" width="93" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="TaIpVy16Xg6mBHyJVjww-16" target="TaIpVy16Xg6mBHyJVjww-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-27" value="&lt;div&gt;Sensor Data&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="TaIpVy16Xg6mBHyJVjww-14">
+          <mxGeometry x="0.6726" y="-1" relative="1" as="geometry">
+            <mxPoint x="-1" y="3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="TaIpVy16Xg6mBHyJVjww-16" target="TaIpVy16Xg6mBHyJVjww-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-26" value="Server Logs" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="TaIpVy16Xg6mBHyJVjww-15">
+          <mxGeometry x="0.6874" y="-2" relative="1" as="geometry">
+            <mxPoint x="-2" y="5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-16" value="Consumer" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="367" y="382.5" width="70" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="TaIpVy16Xg6mBHyJVjww-7" target="TaIpVy16Xg6mBHyJVjww-13">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="352" y="540" />
+              <mxPoint x="402" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-30" value="&lt;div&gt;sensor.motion&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="TaIpVy16Xg6mBHyJVjww-17">
+          <mxGeometry x="-0.585" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-32" value="server.log" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="TaIpVy16Xg6mBHyJVjww-18" target="TaIpVy16Xg6mBHyJVjww-13">
+          <mxGeometry x="-0.8171" relative="1" as="geometry">
+            <mxPoint x="571.2857142857142" y="590" as="sourcePoint" />
+            <mxPoint x="400" y="480" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="620" y="540" />
+              <mxPoint x="402" y="540" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-18" value="Log_Producer" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="590" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
