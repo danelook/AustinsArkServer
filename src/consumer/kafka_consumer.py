@@ -78,6 +78,43 @@ try:
         topic = message.topic
         print(f"[Received] Topic: {topic} | Data: {sensor_data}")
         # Ready for DB insert logic here (optional)
+        cursor = mysql_conn.cursor()
+
+        sensor_type = sensor_data.get("sensor_type")
+        timestamp = sensor_data.get("timestamp")
+        sensor_id = sensor_data.get("sensor_id")
+        value = sensor_data.get("value")
+        units = sensor_data.get("units")
+
+        try:
+            if sensor_type == "motion":
+                insert_query = """
+                    INSERT INTO motion_readings (timestamp, sensor_id, value, units)
+                    VALUES (%s, %s, %s, %s)
+                """
+            elif sensor_type == "temperature":
+                insert_query = """
+                    INSERT INTO temperature_readings (timestamp, sensor_id, value, units)
+                    VALUES (%s, %s, %s, %s)
+                """
+            elif sensor_type == "humidity":
+                insert_query = """
+                    INSERT INTO humidity_readings (timestamp, sensor_id, value, units)
+                    VALUES (%s, %s, %s, %s)
+                """
+            else:
+                print(f"[Warning] Unknown sensor type: {sensor_type}. Skipping insert.")
+                continue
+
+            cursor.execute(insert_query, (timestamp, sensor_id, value, units))
+            mysql_conn.commit()
+        except Exception as e:
+            print(f"[MySQL ERROR] Failed to insert {sensor_type} reading: {e}")
+        finally:
+            cursor.close()
+
+
+
 except KeyboardInterrupt:
     print("\n[Consumer] Shutting down...")
 finally:
