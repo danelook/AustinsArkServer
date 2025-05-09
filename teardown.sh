@@ -13,6 +13,10 @@ for SENSOR in "${SENSORS[@]}"; do
   kubectl delete -f "k8s/sensors/${SENSOR}.yaml" || echo "$SENSOR resources not found, skipping..."
 done
 
+# Teardown log_producer deployment
+echo "Deleting log_producer..."
+kubectl delete -f "k8s/log/log_producer-deployment.yaml" || echo "Log producer resources not found, skipping..."
+
 # Teardown Kafka-related deployments
 echo "Deleting Kafka stack..."
 kubectl delete -f "k8s/kafka/kafka_stack.yaml" || echo "Kafka stack resources not found, skipping..."

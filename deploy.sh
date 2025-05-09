@@ -13,6 +13,9 @@ for SENSOR in "${SENSORS[@]}"; do
     echo "Building image for $SENSOR..."
     docker build -f Docker/sensors/${SENSOR}/Dockerfile -t ${SENSOR}:latest .
 done
+
+# log_producer image
+docker build -f Docker/log/Dockerfile -t log_producer:latest .
 # kafka_consumer image
 docker build -f Docker/consumer/Dockerfile -t kafka_consumer:latest .
 
@@ -22,6 +25,8 @@ for SENSOR in "${SENSORS[@]}"; do
     echo "Deploying $SENSOR to Kubernetes..."
     kubectl apply -f "k8s/sensors/${SENSOR}.yaml"
 done
+# log_producer deployment
+kubectl apply -f "k8s/log/log_producer-deployment.yaml"
 # kakfa broker deployment
 kubectl apply -f "k8s/kafka/kafka_stack.yaml"
 
