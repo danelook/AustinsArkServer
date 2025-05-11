@@ -4,6 +4,22 @@ import json
 import os
 from datetime import datetime, timezone
 from kafka import KafkaProducer
+from prometheus_client import start_http_server, Gauge
+
+# Define Prometheus metrics
+motion_metric = Gauge('motion_sensor_value', 'Motion sensor value', ['sensor_id'])
+
+def simulate_motion():
+    return random.choice([0, 1])  # Simulate motion as 0 or 1 (boolean)
+
+if __name__ == "__main__":
+    sensor_id = "motion_1"
+    start_http_server(8000)  # Expose metrics on port 8000
+    while True:
+        motion = simulate_motion()
+        motion_metric.labels(sensor_id=sensor_id).set(motion)
+        print(f"Motion: {motion}")
+        time.sleep(1)
 
 # Configurable Kafka settings
 KAFKA_ENABLED = os.getenv("KAFKA_MOTION_ENABLED", "false").lower() == "true"
@@ -35,9 +51,6 @@ if KAFKA_ENABLED:
     if not producer:
         print("[Producer] Could not connect to Kafka. Disabling Kafka output.")
         KAFKA_ENABLED = False
-
-def simulate_motion():
-    return random.random() < 0.1  # 10% chance of motion
 
 if __name__ == "__main__":
     tick = 0
