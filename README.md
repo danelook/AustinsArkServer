@@ -38,6 +38,9 @@ We are currently able to run a kubernetes cluster that spawns 3 different sensor
 3. Documentation for entire system
 4. Put together presentation slides & establish game-plan for presentation.
 
+# Notable Errors: 
+1. Deleting the kafka-broker pod basically stops messages from flowing through. Producers still produce messages, the kafka-consumer still stays up and running, and the databases are still fully functional, but the flow of messages stops and doesn't continue once the broker is deleted. Even if it a new broker is spawned, the messages don't continue. Something to look into. 
+
 # View top logs
 ```bash
 kubectl logs <pod-name> | head -n X
