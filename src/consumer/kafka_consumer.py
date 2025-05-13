@@ -75,6 +75,14 @@ def connect_mongo_with_retry():
     print("[MongoDB] Could not connect after retries. Exiting.")
     exit(1)
 
+def ensure_mongo_connection():
+    global mongo_collection
+    try:
+        mongo_collection.estimated_document_count()
+    except Exception as e:
+        print(f"[Alert] MongoDB connection lost. Attempting to reconnect... Reason: {e}")
+        mongo_collection = connect_mongo_with_retry()
+
 def connect_kafka_with_retry():
     for attempt in range(1, MAX_RETRIES + 1):
         try:
@@ -107,16 +115,17 @@ try:
         topic = message.topic
         print(f"[Received] Topic: {topic} | Data: {sensor_data}")
 
+        ensure_mongo_connection()
         if topic == "server.logs":
             try:
                 mongo_collection.insert_one(sensor_data)
                 print("[MongoDB] Inserted log into MongoDB")
             except Exception as e:
-                print(f"[MongoDB ERROR] Failed to insert log: {e}")
-            continue
+                print(f"[MongoDB ERROR] Failed to insert log after reconnect attempt: {e}")
+                print(f"[Monitoring] ALERT: MongoDB insert failure for topic '{topic}' with data {sensor_data}")
+            continue  # Skip MySQL processing for logs
 
         ensure_mysql_connection()
-
         sensor_type = sensor_data.get("sensor_type")
         timestamp = sensor_data.get("timestamp")
         sensor_id = sensor_data.get("sensor_id")
