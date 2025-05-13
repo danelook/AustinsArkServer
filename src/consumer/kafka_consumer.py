@@ -78,6 +78,7 @@ def connect_mongo_with_retry():
 def ensure_mongo_connection():
     global mongo_collection
     try:
+        # Try a harmless operation to test connection
         mongo_collection.estimated_document_count()
     except Exception as e:
         print(f"[Alert] MongoDB connection lost. Attempting to reconnect... Reason: {e}")
@@ -102,6 +103,17 @@ def connect_kafka_with_retry():
     print("[Kafka] Could not connect after retries. Exiting.")
     exit(1)
 
+def ensure_kafka_connection(consumer):
+    try:
+        # Try to fetch metadata as a way to test if the connection is alive
+        consumer.partitions_for_topic(KAFKA_TOPICS[0])  # You can replace with any topic
+    except Exception as e:
+        print(f"[Alert] Kafka connection lost. Attempting to reconnect... Reason: {e}")
+        consumer.close()
+        consumer = connect_kafka_with_retry()
+        print("[Kafka] Reconnected successfully.")
+    return consumer
+
 # Establish connections
 mysql_conn = connect_mysql_with_retry()
 mongo_collection = connect_mongo_with_retry()
@@ -111,6 +123,10 @@ print(f"[Consumer] Listening to topics: {KAFKA_TOPICS}")
 
 try:
     for message in consumer:
+        # Ensure Kafka connection before processing messages
+        consumer = ensure_kafka_connection(consumer)
+
+        # Process messages as usual
         sensor_data = message.value
         topic = message.topic
         print(f"[Received] Topic: {topic} | Data: {sensor_data}")
@@ -123,7 +139,6 @@ try:
             except Exception as e:
                 print(f"[MongoDB ERROR] Failed to insert log after reconnect attempt: {e}")
                 print(f"[Monitoring] ALERT: MongoDB insert failure for topic '{topic}' with data {sensor_data}")
-            continue  # Skip MySQL processing for logs
 
         ensure_mysql_connection()
         sensor_type = sensor_data.get("sensor_type")
