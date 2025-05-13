@@ -51,6 +51,16 @@ def connect_mysql_with_retry():
     print("[MySQL] Could not connect after retries. Exiting.")
     exit(1)
 
+def ensure_mysql_connection():
+    global mysql_conn
+    try:
+        if not mysql_conn.is_connected():
+            print("[Alert] MySQL connection lost. Attempting to reconnect...")
+            mysql_conn = connect_mysql_with_retry()
+    except Exception as e:
+        print(f"[Critical] Error checking MySQL connection: {e}")
+        mysql_conn = connect_mysql_with_retry()
+
 def connect_mongo_with_retry():
     for attempt in range(1, MAX_RETRIES + 1):
         try:
@@ -105,8 +115,7 @@ try:
                 print(f"[MongoDB ERROR] Failed to insert log: {e}")
             continue
 
-        # Insert sensor data into MySQL
-        cursor = mysql_conn.cursor()
+        ensure_mysql_connection()
 
         sensor_type = sensor_data.get("sensor_type")
         timestamp = sensor_data.get("timestamp")
@@ -115,6 +124,8 @@ try:
         units = sensor_data.get("units")
 
         try:
+            cursor = mysql_conn.cursor()
+
             if sensor_type == "motion":
                 insert_query = """
                     INSERT INTO motion_readings (timestamp, sensor_id, value, units)
@@ -136,10 +147,14 @@ try:
 
             cursor.execute(insert_query, (timestamp, sensor_id, value, units))
             mysql_conn.commit()
-        except Exception as e:
+            print(f"[MySQL] Inserted {sensor_type} data successfully.")
+
+        except Error as e:
             print(f"[MySQL ERROR] Failed to insert {sensor_type} reading: {e}")
+            print(f"[Monitoring] ALERT: MySQL insert failure for topic '{topic}' with data {sensor_data}")
         finally:
-            cursor.close()
+            if 'cursor' in locals():
+                cursor.close()
 
 except KeyboardInterrupt:
     print("\n[Consumer] Shutting down...")
