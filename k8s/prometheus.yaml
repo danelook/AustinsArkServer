@@ -18,6 +18,9 @@ data:
       - job_name: 'motion_sensor'
         static_configs:
           - targets: ['motion-service:80']
+      - job_name: 'log_producer'
+        static_configs:
+          - targets: ['log-producer:80']
 ---
 # Prometheus Deployment
 apiVersion: apps/v1
