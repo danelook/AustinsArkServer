@@ -80,6 +80,18 @@ spec:
             value: "PLAINTEXT://:9092"
           - name: ALLOW_PLAINTEXT_LISTENER
             value: "yes"
+          - name: KAFKA_BROKER_ID
+            value: "1"
+        readinessProbe:
+          tcpSocket:
+            port: 9092
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        livenessProbe:
+          tcpSocket:
+            port: 9092
+          initialDelaySeconds: 15
+          periodSeconds: 10
 ---
 # Kafka-UI Service (optional but very helpful)
 apiVersion: v1
