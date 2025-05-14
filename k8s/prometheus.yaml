@@ -12,6 +12,12 @@ data:
       - job_name: 'temperature_sensor'
         static_configs:
           - targets: ['temperature-service:80']
+      - job_name: 'humidity_sensor'
+        static_configs:
+          - targets: ['humidity-service:80']
+      - job_name: 'motion_sensor'
+        static_configs:
+          - targets: ['motion-service:80']
 ---
 # Prometheus Deployment
 apiVersion: apps/v1
