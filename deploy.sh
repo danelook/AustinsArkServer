@@ -44,7 +44,11 @@ kubectl create configmap mysql-initdb-config \
   --from-file=init.sql=k8s/databases/init.sql \
   --dry-run=client -o yaml | kubectl apply -f - 
   
+# Prometheus and grafana deployment  
 kubectl apply -f "k8s/prometheus.yaml"
+kubectl rollout status deployment/prometheus
+kubectl apply -f "k8s/grafana/grafana.yaml"
+kubectl rollout status deployment/grafana
 
 # mysql deployment 
 kubectl apply -f "k8s/databases/mysql_deployment.yaml"
@@ -57,4 +61,4 @@ kubectl rollout status deployment/mongodb
 # kafka_consumer deployment 
 kubectl apply -f "k8s/kafka/kafka_consumer_deployment.yaml"
 
-echo "All sensors deployed successfully!"  
+echo "All deployments deployed successfully!"  

@@ -45,3 +45,19 @@ We are currently able to run a kubernetes cluster that spawns 3 different sensor
 ```bash
 kubectl logs <pod-name> | head -n X
 ```
+
+# Monitoring and Observability
+In order to view prometheus and Grafana a few steps have to be taken. 
+1. port forward prometheus using the following command: 
+```bash
+kubectl port-forward service/prometheus-service 9090:9090
+```
+2. port forward grafana using the following command: 
+```bash
+kubectl port-forward svc/grafana 3000:80
+```
+3. Add prometheus as a data source on grafana
+    3a. Enter the following into the Promethus server url: http://prometheus-service:9090
+    3b. Save and test the data source
+
+4. Create dashboards. 
