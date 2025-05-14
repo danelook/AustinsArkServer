@@ -7,9 +7,10 @@ spec:
   selector:
     app: humidity
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: 80
-      targetPort: 5000
+      targetPort: 8000
   type: ClusterIP
 ---
 # humidity_sensor Deployment
@@ -31,6 +32,8 @@ spec:
       - name: humidity
         image: humidity_sensor:latest
         imagePullPolicy: Never
+        ports:
+          - containerPort: 8000
         env:
         - name: KAFKA_HUMIDITY_ENABLED
           value: "true"
@@ -38,3 +41,5 @@ spec:
           value: "sensor.humidity"
         - name: KAFKA_BOOTSTRAP_SERVERS
           value: "kafka:9092"
+        - name: METRICS_PORT
+          value: "8000"

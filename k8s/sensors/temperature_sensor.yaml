@@ -40,6 +40,6 @@ spec:
           - name: KAFKA_TEMP_TOPIC
             value: "sensor.temperature"
           - name: KAFKA_BOOTSTRAP_SERVERS
-            value: "kafka.default.svc.cluster.local:9092"
+            value: "kafka:9092"
           - name: METRICS_PORT
             value: "8000"

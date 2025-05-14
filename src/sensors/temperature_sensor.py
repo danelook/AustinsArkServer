@@ -10,7 +10,7 @@ from prometheus_client import start_http_server, Counter, Gauge
 KAFKA_ENABLED = os.getenv("KAFKA_TEMP_ENABLED", "false").lower() == "true"
 KAFKA_TOPIC = os.getenv("KAFKA_TEMP_TOPIC", "sensor.temperature")
 KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
-METRICS_PORT = int(os.getenv("METRICS_PORT", "5000"))
+METRICS_PORT = int(os.getenv("METRICS_PORT", "8000"))
 
 # Prometheus metrics
 messages_sent = Counter("temperature_messages_sent_total", "Total messages sent")
