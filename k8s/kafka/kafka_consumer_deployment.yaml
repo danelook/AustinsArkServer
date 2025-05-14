@@ -13,24 +13,35 @@ spec:
         app: kafka-consumer
     spec:
       containers:
-      - name: kafka-consumer
-        image: kafka_consumer:latest
-        imagePullPolicy: Never
-        env:
-        - name: KAFKA_BOOTSTRAP_SERVERS
-          value: "kafka:9092"
-        - name: KAFKA_TOPICS
-          value: "sensor.temperature,sensor.humidity,sensor.motion"
-        - name: KAFKA_GROUP_ID
-          value: "sensor-group"
-        - name: MYSQL_HOST
-          value: "mysql"
-        - name: MYSQL_PORT
-          value: "3306"
-        - name: MYSQL_USER
-          value: "sensoruser"
-        - name: MYSQL_PASSWORD
-          value: "sensorpass"
-        - name: MYSQL_DATABASE
-          value: "sensordata"
+        - name: kafka-consumer
+          image: kafka_consumer:latest
+          imagePullPolicy: Never
+          env:
+            - name: KAFKA_TOPICS
+              value: "sensor.temperature,sensor.humidity,sensor.motion,server.logs"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka:9092"
+            - name: KAFKA_GROUP_ID
+              value: "sensor-consumer-group"
 
+            # MySQL config (already present probably)
+            - name: MYSQL_HOST
+              value: "mysql"
+            - name: MYSQL_PORT
+              value: "3306"
+            - name: MYSQL_USER
+              value: "sensoruser"
+            - name: MYSQL_PASSWORD
+              value: "sensorpass"
+            - name: MYSQL_DATABASE
+              value: "sensordata"
+
+            # MongoDB config
+            - name: MONGO_HOST
+              value: "mongodb"
+            - name: MONGO_PORT
+              value: "27017"
+            - name: MONGO_DB
+              value: "logdata"
+            - name: MONGO_COLLECTION
+              value: "server_logs"
