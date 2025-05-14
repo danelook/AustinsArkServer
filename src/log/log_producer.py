@@ -3,8 +3,8 @@ import random
 import json
 import os
 from datetime import datetime, timezone
-from kafka import KafkaProducer
-from prometheus_client import start_http_server, Counter, Gauge
+from kafka import KafkaProducer 
+from prometheus_client import start_http_server, Counter, Gauge 
 
 # Kafka Config
 KAFKA_ENABLED = os.getenv("KAFKA_LOG_ENABLED", "false").lower() == "true"

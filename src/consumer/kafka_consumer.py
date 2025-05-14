@@ -1,10 +1,10 @@
-from kafka import KafkaConsumer
+from kafka import KafkaConsumer 
 import json
 import os
 import time
-import mysql.connector
-from mysql.connector import Error
-from pymongo import MongoClient
+import mysql.connector 
+from mysql.connector import Error 
+from pymongo import MongoClient 
 
 # Kafka config
 KAFKA_TOPICS = os.getenv("KAFKA_TOPICS", "sensor.temperature").split(",")
@@ -127,25 +127,26 @@ try:
         consumer = ensure_kafka_connection(consumer)
 
         # Process messages as usual
-        sensor_data = message.value
+        data = message.value
         topic = message.topic
-        print(f"[Received] Topic: {topic} | Data: {sensor_data}")
+        print(f"[Received] Topic: {topic} | Data: {data}")
 
         ensure_mongo_connection()
         if topic == "server.logs":
             try:
-                mongo_collection.insert_one(sensor_data)
+                mongo_collection.insert_one(data)
                 print("[MongoDB] Inserted log into MongoDB")
             except Exception as e:
                 print(f"[MongoDB ERROR] Failed to insert log after reconnect attempt: {e}")
-                print(f"[Monitoring] ALERT: MongoDB insert failure for topic '{topic}' with data {sensor_data}")
+                print(f"[Monitoring] ALERT: MongoDB insert failure for topic '{topic}' with data {data}")
+            continue
 
         ensure_mysql_connection()
-        sensor_type = sensor_data.get("sensor_type")
-        timestamp = sensor_data.get("timestamp")
-        sensor_id = sensor_data.get("sensor_id")
-        value = sensor_data.get("value")
-        units = sensor_data.get("units")
+        sensor_type = data.get("sensor_type")
+        timestamp = data.get("timestamp")
+        sensor_id = data.get("sensor_id")
+        value = data.get("value")
+        units = data.get("units")
 
         try:
             cursor = mysql_conn.cursor()
@@ -175,7 +176,7 @@ try:
 
         except Error as e:
             print(f"[MySQL ERROR] Failed to insert {sensor_type} reading: {e}")
-            print(f"[Monitoring] ALERT: MySQL insert failure for topic '{topic}' with data {sensor_data}")
+            print(f"[Monitoring] ALERT: MySQL insert failure for topic '{topic}' with data {data}")
         finally:
             if 'cursor' in locals():
                 cursor.close()

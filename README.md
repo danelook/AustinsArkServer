@@ -1,8 +1,9 @@
 # Project ArkSense
 # Notes
-We are currently able to run a kubernetes cluster that spawns 3 different sensor types. Each sensor sends/produces messages to a different topic which is then routed through a kafka-broker system and ultimately consumed by a kafka_consumer. The kafka_consumer is able to establish a connection to a spawned mySQL pod with pre-established infrastructure. 
+We are currently able to run a kubernetes cluster that spawns 3 different sensor types. Each sensor sends/produces messages to a different topic which is then routed through a kafka-broker system and ultimately consumed by a kafka_consumer. The kafka_consumer is able to establish a connection to a spawned mySQL pod with pre-established infrastructure and insert sensor data into said infrastructure. The kafka_consumer is also able to establish a connection to a spawned mongodb pod and insert simulated server logs to be stored for monitoring/observability.
+
 ## Next steps:   
-1. Implement prometheus metric exporting inside kafka_consumer and log_producer 
+1. Implement prometheus metric exporting inside kafka_consumer.
 2. Build custom dashboards to allow for monitoring and observability of the system and implement configMap for data persistence/structure.
 3. Documentation for entire system
 4. Put together presentation slides & establish game-plan for presentation.
