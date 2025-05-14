@@ -62,6 +62,3 @@ kubectl port-forward svc/grafana 3000:80
     3b. Save and test the data source
 
 4. Create dashboards. 
-
-# Real world application to our project
-1. Environment sensors to notify about PNC branch location busy-ness. For example, Planet Fitness has a "Crowd Meter" that we could relate to with what our system does. 
