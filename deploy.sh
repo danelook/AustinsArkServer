@@ -42,8 +42,9 @@ echo "Creating ConfigMap for MySQL initialization..."
 
 kubectl create configmap mysql-initdb-config \
   --from-file=init.sql=k8s/databases/init.sql \
-  --dry-run=client -o yaml | kubectl apply -f -
-
+  --dry-run=client -o yaml | kubectl apply -f - 
+  
+kubectl apply -f "k8s/prometheus.yaml"
 
 # mysql deployment 
 kubectl apply -f "k8s/databases/mysql_deployment.yaml"
