@@ -1,4 +1,4 @@
-from kafka import KafkaConsumer 
+from kafka import KafkaConsumer
 import json
 import os
 import time
