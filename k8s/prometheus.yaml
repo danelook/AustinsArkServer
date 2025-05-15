@@ -21,6 +21,9 @@ data:
       - job_name: 'log_producer'
         static_configs:
           - targets: ['log-producer:80']
+      - job_name: 'kafka_consumer'
+        static_configs:
+          - targets: ['kafka-consumer:80']
 ---
 # Prometheus Deployment
 apiVersion: apps/v1
