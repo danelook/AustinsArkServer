@@ -7,9 +7,10 @@ spec:
   selector:
     app: motion
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: 80
-      targetPort: 5000
+      targetPort: 8000
   type: ClusterIP
 ---
 # motion_sensor deployment
@@ -31,6 +32,8 @@ spec:
       - name: motion
         image: motion_sensor:latest
         imagePullPolicy: Never
+        ports:
+          - containerPort: 8000
         env:
         - name: KAFKA_MOTION_ENABLED
           value: "true"
@@ -38,3 +41,5 @@ spec:
           value: "sensor.motion"
         - name: KAFKA_BOOTSTRAP_SERVERS
           value: "kafka:9092"   # <--- Important: kafka hostname inside k8s cluster
+        - name: METRICS_PORT
+          value: "8000"

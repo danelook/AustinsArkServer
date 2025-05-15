@@ -7,9 +7,10 @@ spec:
   selector:
     app: temperature
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: 80
-      targetPort: 5000
+      targetPort: 8000
   type: ClusterIP
 ---
 # temperature_sensor deployment
@@ -31,10 +32,14 @@ spec:
       - name: temperature
         image: temperature_sensor:latest
         imagePullPolicy: Never
+        ports:
+          - containerPort: 8000
         env:
           - name: KAFKA_TEMP_ENABLED
             value: "true"
           - name: KAFKA_TEMP_TOPIC
             value: "sensor.temperature"
           - name: KAFKA_BOOTSTRAP_SERVERS
-            value: "kafka.default.svc.cluster.local:9092"
+            value: "kafka:9092"
+          - name: METRICS_PORT
+            value: "8000"
