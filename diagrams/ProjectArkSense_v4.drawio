@@ -1,0 +1,145 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0" version="27.0.2">
+  <diagram name="Page-1" id="ZSrhWRTSfrOasErDlmwj">
+    <mxGraphModel dx="1237" dy="568" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-1" value="&lt;h1 align=&quot;left&quot;&gt;Linux&lt;/h1&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=18;" parent="1" vertex="1">
+          <mxGeometry x="70" y="110" width="660" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-2" value="&lt;h2&gt;Kubernetes Cluster&lt;/h2&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=20;" parent="1" vertex="1">
+          <mxGeometry x="90" y="180" width="600" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-4" value="MongoDB" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="429.9998701298702" y="240.00333333333333" width="88.83116883116884" height="41.60000000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="TaIpVy16Xg6mBHyJVjww-6" target="TaIpVy16Xg6mBHyJVjww-13" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="206.94805194805195" y="470.53333333333336" />
+              <mxPoint x="337.974025974026" y="470.53333333333336" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-29" value="sensor.temperature" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" parent="TaIpVy16Xg6mBHyJVjww-5" vertex="1" connectable="0">
+          <mxGeometry x="-0.7631" y="1" relative="1" as="geometry">
+            <mxPoint x="-16" y="-27" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mtVwhfkHzTJZpimL1PCI-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="TaIpVy16Xg6mBHyJVjww-6" target="mtVwhfkHzTJZpimL1PCI-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="610" y="561" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mtVwhfkHzTJZpimL1PCI-6" value="Metrics" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mtVwhfkHzTJZpimL1PCI-5">
+          <mxGeometry x="0.6873" y="1" relative="1" as="geometry">
+            <mxPoint y="-4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-6" value="&lt;div&gt;Temperature_Sensor &lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="110" y="540" width="128.76" height="41.2" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-7" value="Motion_Sensor" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="250" y="539.6" width="91.68" height="41.6" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="TaIpVy16Xg6mBHyJVjww-9" target="TaIpVy16Xg6mBHyJVjww-13" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="395.7142857142858" y="470.53333333333336" />
+              <mxPoint x="337.974025974026" y="470.53333333333336" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-31" value="sensor.humidity" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" parent="TaIpVy16Xg6mBHyJVjww-8" vertex="1" connectable="0">
+          <mxGeometry x="-0.6426" y="-1" relative="1" as="geometry">
+            <mxPoint x="3" y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-9" value="Humidity_Sensor" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="350" y="539.6" width="100" height="41.6" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-10" value="&lt;div&gt;MySQL&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="162.537012987013" y="230.00333333333333" width="88.83116883116884" height="41.60000000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-11" value="Kafka" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=8;" parent="1" vertex="1">
+          <mxGeometry x="260.25" y="290" width="160" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="TaIpVy16Xg6mBHyJVjww-13" target="TaIpVy16Xg6mBHyJVjww-16" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-13" value="Kafka Broker System" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="290" y="364.34000000000003" width="96.45" height="38.93" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="TaIpVy16Xg6mBHyJVjww-16" target="TaIpVy16Xg6mBHyJVjww-10" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-27" value="&lt;div&gt;Sensor Data&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" parent="TaIpVy16Xg6mBHyJVjww-14" vertex="1" connectable="0">
+          <mxGeometry x="0.6726" y="-1" relative="1" as="geometry">
+            <mxPoint x="-1" y="3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="TaIpVy16Xg6mBHyJVjww-16" target="TaIpVy16Xg6mBHyJVjww-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-26" value="Server Logs" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" parent="TaIpVy16Xg6mBHyJVjww-15" vertex="1" connectable="0">
+          <mxGeometry x="0.6874" y="-2" relative="1" as="geometry">
+            <mxPoint x="-2" y="5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mtVwhfkHzTJZpimL1PCI-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0.016;entryY=0.585;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="TaIpVy16Xg6mBHyJVjww-16" target="mtVwhfkHzTJZpimL1PCI-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="470" y="342" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mtVwhfkHzTJZpimL1PCI-8" value="Metrics" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mtVwhfkHzTJZpimL1PCI-7">
+          <mxGeometry x="0.0503" y="-1" relative="1" as="geometry">
+            <mxPoint x="47" y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-16" value="Consumer" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="293.22999999999996" y="320" width="90" height="28.67" as="geometry" />
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="TaIpVy16Xg6mBHyJVjww-7" target="TaIpVy16Xg6mBHyJVjww-13" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300.961038961039" y="470.53333333333336" />
+              <mxPoint x="337.974025974026" y="470.53333333333336" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-30" value="&lt;div&gt;sensor.motion&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" parent="TaIpVy16Xg6mBHyJVjww-17" vertex="1" connectable="0">
+          <mxGeometry x="-0.585" relative="1" as="geometry">
+            <mxPoint y="6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-32" value="server.log" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="TaIpVy16Xg6mBHyJVjww-18" target="TaIpVy16Xg6mBHyJVjww-13" edge="1">
+          <mxGeometry x="-0.7709" y="-1" relative="1" as="geometry">
+            <mxPoint x="463.28942486085344" y="505.20000000000005" as="sourcePoint" />
+            <mxPoint x="336.4935064935065" y="428.9333333333334" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="499.3506493506494" y="470.53333333333336" />
+              <mxPoint x="337.974025974026" y="470.53333333333336" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TaIpVy16Xg6mBHyJVjww-18" value="Log_Producer" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="459.99506493506493" y="539.6" width="88.83116883116884" height="41.60000000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="mtVwhfkHzTJZpimL1PCI-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="mtVwhfkHzTJZpimL1PCI-3" target="mtVwhfkHzTJZpimL1PCI-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mtVwhfkHzTJZpimL1PCI-3" value="Prometheus" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="320.00000000000006" width="80" height="36.19" as="geometry" />
+        </mxCell>
+        <mxCell id="mtVwhfkHzTJZpimL1PCI-9" value="Grafana" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="241.6" width="80" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
