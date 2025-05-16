@@ -30,6 +30,10 @@ spec:
               mountPath: /var/lib/grafana/dashboards/humidity
             - name: motion-dashboard
               mountPath: /var/lib/grafana/dashboards/motion
+            - name: log-dashboard
+              mountPath: /var/lib/grafana/dashboards/log
+            - name: kafka-consumer-dashboard
+              mountPath: /var/lib/grafana/dashboards/kafka-consumer
             - name: dashboard-provider
               mountPath: /etc/grafana/provisioning/dashboards
             - name: datasource
@@ -46,6 +50,12 @@ spec:
         - name: motion-dashboard
           configMap: 
             name: grafana-motion-dash
+        - name: log-dashboard
+          configMap:
+            name: grafana-log-dash
+        - name: kafka-consumer-dashboard
+          configMap:
+            name: grafana-kafka-consumer-dash
         - name: dashboard-provider
           configMap:
             name: grafana-dashboard-provider

@@ -50,11 +50,13 @@ kubectl rollout status deployment/prometheus
 
 # Prometheus and dashboards configmap rollout
 echo "--------------------------"
-echo "Deploying to Prometheus configmap and dashboards configmap..."
+echo "Deploying Prometheus configmap and dashboards configmap..."
 echo "--------------------------"
 kubectl apply -f "k8s/dashboards/temp_dash.yaml"
 kubectl apply -f "k8s/dashboards/humidity_dash.yaml"
 kubectl apply -f "k8s/dashboards/motion_dash.yaml"
+kubectl apply -f "k8s/dashboards/log_dash.yaml"
+kubectl apply -f "k8s/dashboards/kafka_consumer_dash.yaml"
 kubectl apply -f "k8s/grafana_dash_provider.yaml"
 kubectl apply -f "k8s/promethues_source.yaml"
 

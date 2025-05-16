@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: grafana-humidity-dash
   labels:
-    grafana_dashboard: "1"
+    grafana_dashboard: "humid-dash"
 data:
   humidity-dashboard.json: |
     {
@@ -145,7 +145,7 @@ data:
               "refId": "A"
             }
           ],
-          "title": "Service Reachability",
+          "title": "Humidity Sensor Service Reachability",
           "type": "stat"
         },
         {
