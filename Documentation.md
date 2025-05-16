@@ -124,3 +124,15 @@ Then run the script.
 ``` 
 
 ## Data flow
+### The following is a diagram of the flow of simulated sensor-data from one sensor to the appropriate database in the Kubernetes cluster:
+![A flow diagram of Temp_sensor data](/diagrams/Temperature_flow.jpg)
+> Simulated sensor-data is produced by the sensor, sent to the kafka-broker system via topic/message, consumed by the Kafka consumer, and finally inserted into the appropriate table within the MySQL database 'sensordata'. 
+
+
+### The following is a diagram of the flow of simulated server-log data from the standalone log producer to the appropriate database in the cluster:
+![A flow diagram of log_producer data](/diagrams/server_logs_flow.jpg)
+> Simulated log-data is produced by the standalone log-producer, sent to the kafka-broker system via topic/message, consumed by the Kafka consumer, and finally inserted into the 'server_logs' collection within the 'logdata' database. 
+
+### The following is a diagram of the flow of metrics data to the Prometheus and Grafana services:
+![A flow diagram of metric data](/diagrams/Observability_flow.jpg)
+> Metrics are exported from sensors, the consumer, and the log producer to an exposed port, the Prometheus service scrapes data exposed to the exposed port, and the Prometheus service is utilized as a datasource for the Grafana service to build visualizations within dashboards.
