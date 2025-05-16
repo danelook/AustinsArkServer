@@ -78,6 +78,6 @@ echo "All deployments deployed successfully!"
 # Port forwarding
 echo "--------------------------"
 echo "Port-forwarding Prometheus and Grafana..."
-echo "--------------------------"
-kubectl port-forward svc/prometheus 9090:9090 > /dev/null 2>&1 &
+echo "--------------------------" 
+
 kubectl port-forward svc/grafana 3000:80 > /dev/null 2>&1 &
