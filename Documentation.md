@@ -139,7 +139,7 @@ Then run the script.
 
 ## Testing
 
-Testing for Project: Arksense focused primarily on validating system resilience, reliability, and core functional correctness within a Kubernetes-managed environment. While formal test cases and automation were limited, a variety of manual and scenario-based tests were conducted throughout development to ensure system behavior aligned with expectations.
+Testing for Project:Arksense focused primarily on validating system resilience, reliability, and core functional correctness within a Kubernetes-managed environment. While formal test cases and automation were limited, a variety of manual and scenario-based tests were conducted throughout development to ensure system behavior aligned with expectations.
 
 ### Functional Testing
 
@@ -150,8 +150,63 @@ Testing for Project: Arksense focused primarily on validating system resilience,
 ### Resilience & Recovery Testing
 
 - **Pod deletion and restart**: Manually deleted various pods (sensors, consumer, databases) to observe Kubernetes auto-recovery. Verified that functionality resumed without manual intervention and that message flow remained intact.
-- **Pod scaling**: Scaled sensor producers  up and down to evaluate system behavior under varied load. Confirmed that Kafka continued to handle message throughput and picked up where needed.
+
+>#### Test Case: Kafka Consumer Resilience on Restart  
+>Ensure that the Kafka consumer can restart gracefully and continue processing messages without data loss.
+>
+>**Steps:**
+>1. Start all components and allow producers to generate messages.
+>2. Delete the Kafka consumer pod using `kubectl delete pod <consumer-pod-name>`.
+>3. Allow Kubernetes to recreate the consumer.
+>4. Check MySQL and MongoDB for continued insertion of data.
+>5. Review logs and Prometheus metrics for signs of dropped or failed messages.
+>
+>**Expected Result:**  
+>Consumer pod is automatically redeployed and resumes consuming messages from the correct offset without duplicate or lost data.
+
+>#### Test Case: Sensor Pod Deletion Recovery  
+>Verify that if a sensor pod is deleted, it will automatically restart and resume publishing data to Kafka.
+>
+>**Steps:**
+>1. Deploy all services in Kubernetes, including a sensor pod (e.g., temperature).
+>2. Monitor Prometheus metrics for active message publishing.
+>3. Delete the sensor pod using `kubectl delete pod <sensor-pod-name>`.
+>4. Wait for the pod to restart automatically.
+>5. Observe Prometheus and Kafka logs to verify that message production resumes.
+>
+>**Expected Result:**  
+>Sensor pod is recreated by Kubernetes and resumes normal operation without manual intervention. No lasting disruption to the Kafka message stream.
+
+
+- **Pod scaling**: Scaled sensor producers up and down to evaluate system behavior under varied load. Confirmed that Kafka continued to handle message throughput and picked up where needed.
+
+>#### Test Case: Pod Scaling Behavior  
+>Confirm that scaling sensor or log-producer pods up or down does not disrupt message production or Kafka ingestion.
+>**Steps:**
+>1. Deploy the full system in Kubernetes, including Kafka and at least one sensor producer.
+>2. Use the following command to scale the deployment up:  
+>`kubectl scale deployment <producer-deployment-name> --replicas=3`
+>3. Monitor Prometheus metrics and Kafka topic message rates to verify that message throughput increases appropriately.
+>4. Then scale the deployment down:  
+>`kubectl scale deployment <producer-deployment-name> --replicas=1`
+>5. Observe that Kafka continues to ingest messages and no errors are reported in logs or metrics.
+>
+>**Expected Result:**  
+>Kafka continues to receive and process messages without error. The system dynamically handles load changes as pods scale up or down. No dropped messages or crashes occur during scaling operations.
+
 - **Database persistence**: Restarted and deleted both MongoDB and MySQL pods to validate persistent volume configuration. Ensured no data loss occurred and that stateful sets reattached storage volumes correctly on pod recreation.
+
+>#### Test Case: Database Pod Persistence Validation  
+>Confirm that MySQL and MongoDB retain data across pod restarts by validating persistent volume usage.
+>
+>**Steps:**
+>1. Insert test data into both MySQL and MongoDB.
+>2. Delete both database pods using `kubectl delete pod <db-pod-name>`.
+>3. Allow Kubernetes to restart the pods.
+>4. Query the databases to verify that all test data remains intact.
+>
+>**Expected Result:**  
+>Both databases retain previously stored data after pod recreation, confirming correct persistent volume attachment and configuration.
 
 ### Observability Testing
 
@@ -159,6 +214,41 @@ Testing for Project: Arksense focused primarily on validating system resilience,
 - Verified accuracy of key metrics: message counts, error rates, sensor value gauges, and log severity breakdowns.
 - Validated that Grafana dashboards updated in real-time and reflected accurate system status.
 
-### Lessons Learned
+>#### Test Case: Observability Metrics Coverage  
+>Validate that all relevant metrics are being exposed and scraped by Prometheus.
+>
+>**Steps:**
+>1. Deploy all services and ensure Prometheus is running.
+>2. Visit the Prometheus targets UI and confirm all endpoints are healthy.
+>3. Trigger message production and log generation from producers.
+>4. Check Prometheus and Grafana dashboards for:
+>- Sensor value metrics
+>- Message count and throughput
+>- Log level metrics (INFO, WARNING, ERROR)
+>- Processing success/failure rates
+>
+>**Expected Result:**  
+>All expected metrics are available in Prometheus and visualized correctly in Grafana. No missing data points or unresponsive exporters.
+
+### Testing Lessons Learned
 
 While testing was largely exploratory and hands-on, it played a key role in surfacing potential edge cases and guiding improvements to fault tolerance. Given more time, we would have liked to incorporate automated test scripts and CI-integrated testing pipelines for more rigorous validation.
+
+## Summary & Lessons Learned
+
+Project: Arksense successfully demonstrated a scalable, resilient, and observable IoT simulation platform. By leveraging containerized microservices, Kubernetes orchestration, and a real-time Kafka-based data pipeline, our team was able to build a system that mirrored real-world production environments. Prometheus and Grafana added critical observability into system health, allowing us to test and visualize system behavior under dynamic conditions.
+
+### Lessons Learned & Future Improvements
+
+If given more time or resources, we would have liked to implement following enhancements to improve robustness, maintainability, and scalability:
+
+- **Automated Testing Pipelines**  
+  Introduce CI-integrated test workflows (e.g., GitHub Actions or GitLab CI) to validate deployments, Kafka functionality, and database connectivity after each change or PR. 
+
+- **Kafka Consumer Group Scaling**  
+  Implement multiple consumer replicas using Kafka consumer groups to allow for load balancing and better horizontal scalability.
+
+- **Enhanced Security and Access Control**  
+  Secure Kafka, Prometheus, and databases with role-based access control (RBAC), network policies, and secrets management via Kubernetes.   
+
+This project laid a strong foundation in distributed system design and observability practices. It also highlighted the importance of site reliability engineering — not just building systems that work, but systems that recover gracefully and offer visibility into their state at all times.
