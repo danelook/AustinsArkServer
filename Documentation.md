@@ -64,7 +64,7 @@ The following objectives were established during the planning phase of Project: 
 - System includes service discovery, health checks, inter-service communication, port forwarding, and basic resilience features (auto-restarts, scaling).
 
 ## System Architecture
-The following is a flow/architecture-hybrid diagram of Project:Arksense: 
+### The following is a flow/architecture-hybrid diagram of Project:Arksense: 
 ![System Architecture/flow diagram](/diagrams/ProjectArkSense_v4.jpg)
 
 ## Tools & Technologies
@@ -136,3 +136,29 @@ Then run the script.
 ### The following is a diagram of the flow of metrics data to the Prometheus and Grafana services:
 ![A flow diagram of metric data](/diagrams/Observability_flow.jpg)
 > Metrics are exported from sensors, the consumer, and the log producer to an exposed port, the Prometheus service scrapes data exposed to the exposed port, and the Prometheus service is utilized as a datasource for the Grafana service to build visualizations within dashboards.
+
+## Testing
+
+Testing for Project: Arksense focused primarily on validating system resilience, reliability, and core functional correctness within a Kubernetes-managed environment. While formal test cases and automation were limited, a variety of manual and scenario-based tests were conducted throughout development to ensure system behavior aligned with expectations.
+
+### Functional Testing
+
+- Verified that all sensor and log producer services successfully published data to Kafka topics.
+- Confirmed that the Kafka consumer correctly parsed messages and routed them to either MySQL or MongoDB based on data type.
+- Tested database insertions to ensure correct data formatting, schema adherence (MySQL), and document structure (MongoDB).
+
+### Resilience & Recovery Testing
+
+- **Pod deletion and restart**: Manually deleted various pods (sensors, consumer, databases) to observe Kubernetes auto-recovery. Verified that functionality resumed without manual intervention and that message flow remained intact.
+- **Pod scaling**: Scaled sensor producers  up and down to evaluate system behavior under varied load. Confirmed that Kafka continued to handle message throughput and picked up where needed.
+- **Database persistence**: Restarted and deleted both MongoDB and MySQL pods to validate persistent volume configuration. Ensured no data loss occurred and that stateful sets reattached storage volumes correctly on pod recreation.
+
+### Observability Testing
+
+- Confirmed that Prometheus was successfully scraping metrics from all producers and the consumer service.
+- Verified accuracy of key metrics: message counts, error rates, sensor value gauges, and log severity breakdowns.
+- Validated that Grafana dashboards updated in real-time and reflected accurate system status.
+
+### Lessons Learned
+
+While testing was largely exploratory and hands-on, it played a key role in surfacing potential edge cases and guiding improvements to fault tolerance. Given more time, we would have liked to incorporate automated test scripts and CI-integrated testing pipelines for more rigorous validation.
