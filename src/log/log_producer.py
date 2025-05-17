@@ -3,21 +3,34 @@ import random
 import json
 import os
 from datetime import datetime, timezone
-from kafka import KafkaProducer
+from kafka import KafkaProducer 
+from prometheus_client import start_http_server, Counter, Gauge 
 
 # Kafka Config
 KAFKA_ENABLED = os.getenv("KAFKA_LOG_ENABLED", "false").lower() == "true"
 KAFKA_TOPIC = os.getenv("KAFKA_LOG_TOPIC", "server.logs")
 KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
-
-MAX_RETRIES = 10
-RETRY_DELAY = 5  # seconds
+METRICS_PORT = int(os.getenv("METRICS_PORT", "8000"))
 
 # Log simulation parameters
 LOG_LEVELS = ["INFO", "WARN", "ERROR"]
 COMPONENTS = ["auth", "db", "api", "cache", "frontend"]
 
+# Prometheus metrics
+total_logs_sent = Counter("logs_sent_total", "Total number of log events sent")
+log_level_counter = Counter("log_level_events_total", "Count of log events by level", ["level"])
+latest_log_level = Gauge("latest_log_level", "Numerical value of last log level (INFO=0, WARN=1, ERROR=2)")
+
+level_to_value = {"INFO": 0, "WARN": 1, "ERROR": 2}
+
+# Start Prometheus metrics server
+start_http_server(METRICS_PORT)
+print(f"[Metrics] Prometheus metrics exposed on port {METRICS_PORT}")
+
 producer = None
+MAX_RETRIES = 10
+RETRY_DELAY = 5  # seconds
+
 if KAFKA_ENABLED:
     for attempt in range(1, MAX_RETRIES + 1):
         try:
@@ -36,9 +49,10 @@ if KAFKA_ENABLED:
         KAFKA_ENABLED = False
 
 def generate_log():
+    level = random.choices(LOG_LEVELS, weights=[0.7, 0.2, 0.1])[0]
     log = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
-        "level": random.choices(LOG_LEVELS, weights=[0.7, 0.2, 0.1])[0],
+        "level": level,
         "component": random.choice(COMPONENTS),
         "message": random.choice([
             "User login successful",
@@ -54,6 +68,12 @@ def generate_log():
 if __name__ == "__main__":
     while True:
         log_event = generate_log()
+        level = log_event["level"]
+
+        # Prometheus updates
+        total_logs_sent.inc()
+        log_level_counter.labels(level=level).inc()
+        latest_log_level.set(level_to_value.get(level, -1))
 
         if KAFKA_ENABLED and producer:
             try:

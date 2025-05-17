@@ -1,0 +1,77 @@
+# Grafana Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+        - name: grafana
+          image: grafana/grafana:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: GF_SECURITY_ADMIN_USER
+              value: admin
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              value: admin
+          volumeMounts:
+            - name: temp-dashboard
+              mountPath: /var/lib/grafana/dashboards/temp
+            - name: humidity-dashboard
+              mountPath: /var/lib/grafana/dashboards/humidity
+            - name: motion-dashboard
+              mountPath: /var/lib/grafana/dashboards/motion
+            - name: log-dashboard
+              mountPath: /var/lib/grafana/dashboards/log
+            - name: kafka-consumer-dashboard
+              mountPath: /var/lib/grafana/dashboards/kafka-consumer
+            - name: dashboard-provider
+              mountPath: /etc/grafana/provisioning/dashboards
+            - name: datasource
+              mountPath: /etc/grafana/provisioning/datasources
+
+
+      volumes:
+        - name: temp-dashboard
+          configMap:
+            name: grafana-temp-dash
+        - name: humidity-dashboard
+          configMap:
+            name: grafana-humidity-dash
+        - name: motion-dashboard
+          configMap: 
+            name: grafana-motion-dash
+        - name: log-dashboard
+          configMap:
+            name: grafana-log-dash
+        - name: kafka-consumer-dashboard
+          configMap:
+            name: grafana-kafka-consumer-dash
+        - name: dashboard-provider
+          configMap:
+            name: grafana-dashboard-provider
+        - name: datasource
+          configMap:  
+            name: grafana-datasource 
+---
+# Grafana Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+spec:
+  type: ClusterIP
+  selector:
+    app: grafana
+  ports:
+    - port: 80
+      targetPort: 3000

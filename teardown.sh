@@ -17,6 +17,14 @@ done
 echo "Deleting log_producer..."
 kubectl delete -f "k8s/log/log_producer-deployment.yaml" || echo "Log producer resources not found, skipping..."
 
+# Teardown prometheus deployment
+echo "Deleting Prometheus..."
+kubectl delete -f "k8s/prometheus.yaml" || echo "Prometheus resources not found, skipping..."
+
+# Teardown grafana deployment
+echo "Deleting Grafana..."
+kubectl delete -f "k8s/grafana/grafana.yaml" || echo "Grafana resources not found, skipping..."
+
 # Teardown Kafka-related deployments
 echo "Deleting Kafka stack..."
 kubectl delete -f "k8s/kafka/kafka_stack.yaml" || echo "Kafka stack resources not found, skipping..."

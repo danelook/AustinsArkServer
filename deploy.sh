@@ -42,8 +42,27 @@ echo "Creating ConfigMap for MySQL initialization..."
 
 kubectl create configmap mysql-initdb-config \
   --from-file=init.sql=k8s/databases/init.sql \
-  --dry-run=client -o yaml | kubectl apply -f -
+  --dry-run=client -o yaml | kubectl apply -f - 
+  
+# Prometheus   
+kubectl apply -f "k8s/prometheus.yaml"
+kubectl rollout status deployment/prometheus
 
+# Prometheus and dashboards configmap rollout
+echo "--------------------------"
+echo "Deploying Prometheus configmap and dashboards configmap..."
+echo "--------------------------"
+kubectl apply -f "k8s/dashboards/temp_dash.yaml"
+kubectl apply -f "k8s/dashboards/humidity_dash.yaml"
+kubectl apply -f "k8s/dashboards/motion_dash.yaml"
+kubectl apply -f "k8s/dashboards/log_dash.yaml"
+kubectl apply -f "k8s/dashboards/kafka_consumer_dash.yaml"
+kubectl apply -f "k8s/grafana_dash_provider.yaml"
+kubectl apply -f "k8s/promethues_source.yaml"
+
+#grafana deployment
+kubectl apply -f "k8s/grafana/grafana.yaml"
+kubectl rollout status deployment/grafana
 
 # mysql deployment 
 kubectl apply -f "k8s/databases/mysql_deployment.yaml"
@@ -56,4 +75,11 @@ kubectl rollout status deployment/mongodb
 # kafka_consumer deployment 
 kubectl apply -f "k8s/kafka/kafka_consumer_deployment.yaml"
 
-echo "All sensors deployed successfully!"  
+echo "All deployments deployed successfully!"  
+
+# Port forwarding
+echo "--------------------------"
+echo "Port-forwarding Prometheus and Grafana..."
+echo "--------------------------" 
+
+kubectl port-forward svc/grafana 3000:80 > /dev/null 2>&1 &
