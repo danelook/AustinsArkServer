@@ -205,6 +205,17 @@ Testing for Project:Arksense focused primarily on validating system resilience, 
 >3. Allow Kubernetes to restart the pods.
 >4. Query the databases to verify that all test data remains intact.
 >
+> **Example Queries:**
+> ```mysql
+> select * from temperature_readings where value between "73" and "76";
+> ```
+> ```mysql
+> select * from motion_readings where value like "1";
+> ```
+> ```mysql
+> select * from humidity_readings where value between "40" and "56";
+> ```
+> 
 >**Expected Result:**  
 >Both databases retain previously stored data after pod recreation, confirming correct persistent volume attachment and configuration.
 
