@@ -17,7 +17,7 @@ data:
       "panels": [
         {
           "type": "stat",
-          "title": "Motion Sesnor Service Reachability",
+          "title": "Motion Sensor Service Reachability",
           "datasource": {
             "type": "prometheus",
             "uid": "sensors"
