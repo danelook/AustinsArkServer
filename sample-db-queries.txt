@@ -1,3 +1,5 @@
+kubectl exec -it kafka-7766cb588c-59k5k -- kafka-topics.sh --bootstrap-server localhost:9092 --list
+
 Example MySQL Queries
 > select * from temperature_readings where value between "73" and "76";
 
