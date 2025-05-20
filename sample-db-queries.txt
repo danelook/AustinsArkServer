@@ -1,0 +1,13 @@
+Example MySQL Queries
+> select * from temperature_readings where value between "73" and "76";
+
+> select * from motion_readings where value like "1";
+
+> select * from humidity_readings where value between "40" and "56";
+---
+Example MongoDB Queries
+> db.server_logs.find({ level: "INFO", component: "api" })
+
+> db.server_logs.find({ component: "frontend" })
+
+> db.server_logs.find({ level: "WARN", component: "frontend" })
