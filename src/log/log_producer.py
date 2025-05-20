@@ -49,7 +49,7 @@ if KAFKA_ENABLED:
         KAFKA_ENABLED = False
 
 def generate_log():
-    level = random.choices(LOG_LEVELS, weights=[0.7, 0.2, 0.1])[0]
+    level = random.choices(LOG_LEVELS, weights=[0.5, 0.4, 0.1])[0]
     log = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "level": level,
