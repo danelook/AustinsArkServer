@@ -6,7 +6,7 @@ Example MySQL Queries
 > select * from humidity_readings where value between "40" and "56";
 ---
 Example MongoDB Queries
-> db.server_logs.find({ level: "INFO", component: "api" })
+> db.server_logs.find({ level: "INFO"})
 
 > db.server_logs.find({ component: "frontend" })
 
