@@ -1,4 +1,4 @@
-kubectl exec -it kafka-7766cb588c-59k5k -- kafka-topics.sh --bootstrap-server localhost:9092 --list
+kubectl exec -it <kafka-pod name> -- kafka-topics.sh --bootstrap-server localhost:9092 --list
 
 Example MySQL Queries
 > select * from temperature_readings where value between "73" and "76";
@@ -13,3 +13,5 @@ Example MongoDB Queries
 > db.server_logs.find({ component: "frontend" })
 
 > db.server_logs.find({ level: "WARN", component: "frontend" })
+
+kubectl scale deployment <producer-deployment-name> --replicas=1
